@@ -14,10 +14,10 @@
     "docs:swagger:start": "pnpm run --filter ./docs/swagger start"
   },
   "devDependencies": {
-    "@nestjs/cli": "catalog:",
-    "generate-react-cli": "catalog:",
-    "motion": "catalog:",
-    "next": "catalog:",
-    "typescript": "catalog:"
+    "@nestjs/cli": "^11.0.16",
+    "generate-react-cli": "^8.4.9",
+    "motion": "^12.26.2",
+    "next": "^15.5.9",
+    "typescript": "^5.9.3"
   }
 }
