@@ -13,7 +13,7 @@ import { CreateMatchDto } from './creatematch.dto';
 import { MatchService } from './match.service';
 import { Match } from './match.interface';
 
-@Controller('match')
+@Controller('api/match')
 export class MatchController {
     constructor(private MatchsService: MatchService) { }
 

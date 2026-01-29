@@ -1,51 +1,50 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Cat } from './interfaces/cat.interface';
+import { Ranking } from './ranking.interface';
 import { CreateRankingDto } from './createranking.dto';
 
 @Injectable()
-export class CatsService {
-  private readonly cats: Cat[] = [];
+export class RankingService {
+  private readonly rankings: Ranking[] = [];
   private idCounter = 1;
 
-  create(cat: CreateCatDto): Cat {
+  create(rank: CreateRankingDto): Ranking {
     console.log('service create');
 
-    const newCat: Cat = {
-      id: this.idCounter++,
-      name: cat.name,
-      age: cat.age,
+    const newRanking: Ranking = {
+      id: String(this.idCounter++),
+      rank: rank.rank,
     };
-    this.cats.push(newCat);
-    return newCat;
+    this.rankings.push(newRanking);
+    return newRanking;
   }
 
-  findAll(): Cat[] {
+  findAll(): Ranking[] {
     console.log('service findall');
-    return this.cats;
+    return this.rankings;
   }
 
-  findone(id: number): Cat {
+  findone(id: String): Ranking {
     console.log('service findone');
-    const cat = this.cats.find((cat) => cat.id == id);
-    if (cat) {
-      return cat;
+    const rank = this.rankings.find((rank) => rank.id == id);
+    if (rank) {
+      return rank;
     } else {
-      throw new NotFoundException(`cat with id ${id} not found`);
+      throw new NotFoundException(`rank with id ${id} not found`);
     }
   }
 
-  update(id: number, update: Partial<CreateCatDto>): Cat {
+  update(id: String, update: Partial<CreateRankingDto>): Ranking {
     console.log('service update');
-    const cat = this.findone(id);
-    Object.assign(cat, update);
-    return cat;
+    const rank = this.findone(id);
+    Object.assign(rank, update);
+    return rank;
   }
 
-  delete(id: number): Cat {
+  delete(id: String): Ranking {
     console.log('service delete');
-    const cat = this.findone(id);
-    const index = this.cats.indexOf(cat);
-    this.cats.slice(index, 1);
-    return cat;
+    const rank = this.findone(id);
+    const index = this.rankings.indexOf(rank);
+    this.rankings.slice(index, 1);
+    return rank;
   }
 }

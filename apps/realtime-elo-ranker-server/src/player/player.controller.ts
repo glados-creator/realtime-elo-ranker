@@ -10,17 +10,17 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { CreatePlayerDto } from './createplayer.dto';
-import { PlayersService } from './player.service';
+import { PlayerService } from './player.service';
 import { Player } from './player.interface';
 
-@Controller('player')
+@Controller('api/player')
 export class PlayerController {
-  constructor(private playersService: PlayersService) {}
+  constructor(private PlayerService: PlayerService) {}
 
   @Get()
   findAll(): Player[] {
     console.log('findall');
-    return this.playersService.findAll();
+    return this.PlayerService.findAll();
   }
 
   @Get('query')
@@ -32,7 +32,7 @@ export class PlayerController {
   @Get(':id')
   findOne(@Param('id', new ParseIntPipe()) id: any): Player {
     console.log('findOne');
-    return this.playersService.findone(id);
+    return this.PlayerService.findone(id);
   }
 
   @Get(':id/:other')
@@ -45,7 +45,7 @@ export class PlayerController {
   @Post()
   create(@Body(new ValidationPipe()) body: CreatePlayerDto): Player {
     console.log('create');
-    const player = this.playersService.create(body);
+    const player = this.PlayerService.create(body);
     console.log('created player', player);
     return player;
   }
@@ -56,12 +56,12 @@ export class PlayerController {
     @Body(new ValidationPipe()) body: CreatePlayerDto,
   ): Player {
     console.log('update');
-    return this.playersService.update(id, body);
+    return this.PlayerService.update(id, body);
   }
 
   @Delete(':id')
   remove(@Param('id', new ParseIntPipe()) id: number): Player {
     console.log('remove');
-    return this.playersService.delete(id);
+    return this.PlayerService.delete(id);
   }
 }

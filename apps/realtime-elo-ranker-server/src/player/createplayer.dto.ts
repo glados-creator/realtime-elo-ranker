@@ -4,7 +4,7 @@ export class CreatePlayerDto {
   @IsString()
   @IsNotEmpty()
   readonly id: string;
-  @IsNotEmpty()
-  @Min(0)
-  readonly rank: number;
+  // @IsNotEmpty()
+  // @Min(0)
+  // readonly rank: number;
 }

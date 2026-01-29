@@ -131,7 +131,7 @@ Les données des joueurs et des matchs devront être stockées en mémoire dans 
 
 - Les joueurs devront être stockés dans une liste ou un tableau avec leur score
 - L'historique des matchs devra être stocké dans une liste ou un tableau.
-- Les 
+- Les rankings
 
 ## Calcul du classement
 

@@ -3,7 +3,7 @@ import { Player } from './player.interface';
 import { CreatePlayerDto } from './createplayer.dto';
 
 @Injectable()
-export class PlayersService {
+export class PlayerService {
   private readonly players: Player[] = [];
   private idCounter = 1;
 
@@ -11,8 +11,8 @@ export class PlayersService {
     console.log('service create');
 
     const newPlayer: Player = {
-      id: String(this.idCounter++), // TODO : to uuid
-      rank: player.rank,
+      id: String(player.id || this.idCounter++), // TODO : to uuid
+      rank: 400 // player.rank,
     };
     this.players.push(newPlayer);
     return newPlayer;
