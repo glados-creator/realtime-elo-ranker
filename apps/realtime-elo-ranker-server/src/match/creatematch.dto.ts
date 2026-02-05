@@ -1,11 +1,13 @@
-import { IsInt, IsNotEmpty, IsString, Min } from 'class-validator';
-import { Player } from 'src/player/player.interface';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateMatchDto {
   @IsNotEmpty()
-  readonly winner: Player;
+  @IsString()
+  readonly winner: String;
   @IsNotEmpty()
-  readonly loser: Player;
+  @IsString()
+  readonly loser: String;
   @IsNotEmpty()
+  @IsBoolean()
   readonly draw: boolean;
 }
