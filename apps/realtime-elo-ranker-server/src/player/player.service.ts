@@ -7,7 +7,7 @@ export class PlayerService {
   private readonly players: Player[] = [];
   private idCounter = 1;
 
-  create(player: CreatePlayerDto): Player {
+  public create(player: CreatePlayerDto): Player {
     console.log('service create');
 
     const newPlayer: Player = {
@@ -16,5 +16,9 @@ export class PlayerService {
     };
     this.players.push(newPlayer);
     return newPlayer;
+  }
+
+  public find(id : String) : Player{
+    return this.players[0];
   }
 }
