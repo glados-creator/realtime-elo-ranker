@@ -1,0 +1,9 @@
+packages:
+  # - td1
+  # - td1refactor
+  # - td2
+  # - td3
+  - td4
+
+onlyBuiltDependencies:
+  - esbuild

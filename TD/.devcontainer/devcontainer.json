@@ -1,0 +1,25 @@
+{
+  "name": "iut3-devcontainer",
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "devcontainer",
+  "workspaceFolder": "/devavancer-tdtp-ct",
+  "extensions": [
+    "chouzz.vscode-better-align",
+    "ecmel.vscode-html-css",
+    "edwinhuish.better-comments-next",
+    "fill-labs.dependi",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-complete-tag",
+    "formulahendry.auto-rename-tag",
+    "gruntfuggly.todo-tree",
+    "jgclark.vscode-todo-highlight",
+    "mohd-akram.vscode-html-format",
+    "oderwat.indent-rainbow",
+    "redhat.vscode-yaml",
+    "sidthesloth.html5-boilerplate",
+    "tamasfe.even-better-toml",
+    "tejasvi.rainbow-brackets-2",
+    "tomoki1207.pdf",
+    "zignd.html-css-class-completion"
+  ],
+}

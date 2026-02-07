@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/devavancer-tdtp-ct:cached
+      # - install-deps:/install:cached
+    command: sleep infinity
+    networks:
+      - dev
+
+# volumes:
+
+networks:
+  dev:
