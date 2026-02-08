@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  NotFoundException,
   Sse,
 } from '@nestjs/common';
 import { RankingService } from './ranking.service';
@@ -9,14 +10,19 @@ import { Observable } from 'rxjs';
 
 @Controller('api/ranking')
 export class RankingController {
-  constructor(private rankingsService: RankingService) {}
+  constructor(private rankingService: RankingService) {}
 
-  @Get('ranking')
-  getRanking(): Ranking[] {
+  @Get()
+  async getRanking(): Promise<Ranking[]> {
+    const ranking = await this.rankingService.getRanking();
+    if (ranking.length === 0) {
+      throw new NotFoundException('No players available for ranking');
+    }
+    return ranking;
   }
 
-  @Sse('ranking/events') // L'URL sera http://localhost:8888/api/ranking/events
-    sse(): Observable<any> {
-        return this.rankingsService.getRankingUpdates();
-    }
+  @Sse('events')
+  sse(): Observable<any> {
+    return this.rankingService.getRankingUpdates();
+  }
 }

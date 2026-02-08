@@ -10,16 +10,20 @@ import {
 import { CreatePlayerDto } from './createplayer.dto';
 import { PlayerService } from './player.service';
 import { Player } from './player.interface';
+import { RankingService } from '../ranking/ranking.service';
 
 @Controller('api/player')
 export class PlayerController {
   constructor(
     private playerService: PlayerService,
+    private rankingService: RankingService,
   ) {}
 
   @Post()
   async create(@Body(new ValidationPipe()) body: CreatePlayerDto): Promise<Player> {
     const player = await this.playerService.create(body);
+    // Emit SSE event so clients see the new player
+    this.rankingService.notifyRankingUpdate(player.id, player.rank);
     return player;
   }
 
