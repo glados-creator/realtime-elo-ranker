@@ -19,7 +19,6 @@ import { PlayerEnt } from './player/player.entity';
 import { RankingController } from './ranking/ranking.controller';
 import { RankingService } from './ranking/ranking.service';
 import { RankingModuleBD } from './ranking/ranking.modulebd';
-import { RankingEnt } from './ranking/ranking.entity';
 
 @Module({
   imports: [MatchModuleBD,PlayerModuleBD,RankingModuleBD,TypeOrmModule.forRoot({
@@ -29,7 +28,7 @@ import { RankingEnt } from './ranking/ranking.entity';
       // username: 'root',
       // password: 'root',
       database: join(__dirname, '..', 'database.sqlite'), // Creates in project root
-      entities: [MatchEnt,PlayerEnt,RankingEnt],
+      entities: [MatchEnt,PlayerEnt],
       // entities: [__dirname + '/**/*.entity.ts'],
       synchronize: true, // pour dev
     }),],
