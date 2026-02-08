@@ -4,9 +4,7 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
   Post,
-  Put,
   ValidationPipe,
 } from '@nestjs/common';
 import { CreatePlayerDto } from './createplayer.dto';
@@ -15,13 +13,29 @@ import { Player } from './player.interface';
 
 @Controller('api/player')
 export class PlayerController {
-  constructor(private PlayerService: PlayerService) {}
+  constructor(
+    private playerService: PlayerService,
+  ) {}
 
   @Post()
-  create(@Body(new ValidationPipe()) body: CreatePlayerDto): Player {
-    console.log('create');
-    const player = this.PlayerService.create(body);
-    console.log('created player', player);
+  async create(@Body(new ValidationPipe()) body: CreatePlayerDto): Promise<Player> {
+    const player = await this.playerService.create(body);
     return player;
+  }
+
+  @Get()
+  async list(): Promise<Player[]> {
+    return this.playerService.list();
+  }
+
+  @Get(':id')
+  async find(@Param('id') id: string): Promise<Player> {
+    return this.playerService.find(id);
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: string): Promise<{ ok: boolean }> {
+    await this.playerService.remove(id);
+    return { ok: true };
   }
 }
