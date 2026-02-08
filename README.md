@@ -69,6 +69,14 @@ Le serveur est en hot-reload : les modifications apportées au `swagger.yaml` se
 pnpm run apps:api-mock:start
 ```
 
+## lancer le server
+```bash
+clear
+rm -vf apps/realtime-elo-ranker-server/database.sqlite
+pnpm run apps:server:test:e2e
+pnpm run apps:server:dev
+```
+
 Le mock de l'API sera accessible à l'adresse `http://localhost:8080`. Il ne doit pas être lancé en même temps que le serveur de l'application.
 
 # Architecture
