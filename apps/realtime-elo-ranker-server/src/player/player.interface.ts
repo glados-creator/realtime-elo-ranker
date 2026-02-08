@@ -1,4 +1,4 @@
 export class Player {
-    id : String;
-    rank : number;
+    id: string;
+    rank: number;
 }

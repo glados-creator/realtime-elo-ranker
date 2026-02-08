@@ -8,10 +8,10 @@ export class MatchEnt {
   id: number;
 
   @ManyToOne(() => PlayerEnt, { eager: true })
-  winner: Player;
+  winner: PlayerEnt;
 
   @ManyToOne(() => PlayerEnt, { eager: true })
-  loser: Player;
+  loser: PlayerEnt;
 
   @Column()
   draw: boolean;

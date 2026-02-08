@@ -3,10 +3,10 @@ import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 export class CreateMatchDto {
   @IsNotEmpty()
   @IsString()
-  readonly winner: String;
+  readonly winner: string;
   @IsNotEmpty()
   @IsString()
-  readonly loser: String;
+  readonly loser: string;
   @IsNotEmpty()
   @IsBoolean()
   readonly draw: boolean;

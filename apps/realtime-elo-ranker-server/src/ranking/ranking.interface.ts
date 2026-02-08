@@ -1,4 +1,4 @@
 export class Ranking {
-    id: String;
-    rank : number;
+  id: string;
+  rank: number;
 }

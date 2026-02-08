@@ -1,5 +1,5 @@
 export class Match {
-    winner: String;
-    loser: String;
-    draw: boolean;
+  winner: string;
+  loser: string;
+  draw: boolean;
 }
