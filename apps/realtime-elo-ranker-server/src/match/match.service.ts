@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MatchEnt } from './match.entity';
 import { PlayerService } from '../player/player.service';
+import { RankingService } from '../ranking/ranking.service';
 
 @Injectable()
 export class MatchService {
@@ -12,6 +13,7 @@ export class MatchService {
     @InjectRepository(MatchEnt)
     private readonly repo: Repository<MatchEnt>,
     private readonly playerService: PlayerService,
+    private readonly rankingService: RankingService,
   ) {}
 
   async create(match: CreateMatchDto): Promise<Match> {
@@ -25,11 +27,17 @@ export class MatchService {
       draw: match.draw,
     });
     const saved = await this.repo.save(ent);
-    return {
+
+    const result = {
       winner: saved.winner.id,
       loser: saved.loser.id,
       draw: saved.draw,
     };
+
+    // Process ELO update and emit ranking events
+    await this.rankingService.processMatch(result);
+
+    return result;
   }
 
   async find(id: number): Promise<Match> {

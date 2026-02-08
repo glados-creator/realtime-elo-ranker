@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { Ranking } from './ranking.interface';
 import { Match } from '../match/match.interface';
 import { PlayerService } from '../player/player.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 enum EloScore {
   win = 1,
@@ -63,6 +64,11 @@ export class RankingService {
     const winner = await this.playerService.find(match.winner);
     const loser = await this.playerService.find(match.loser);
 
+    const origWinnerRank = winner.rank;
+    const origLoserRank = loser.rank;
+
+    // console.log(`Processing match winner=${winner.id} loser=${loser.id} origWinnerRank=${origWinnerRank} origLoserRank=${origLoserRank}`);
+
     const probability = RankingService.getEloProbability(
       winner.rank,
       loser.rank,
@@ -92,27 +98,33 @@ export class RankingService {
       );
     }
 
-    // notify
+    // Save updated ranks
+    await this.playerService.updateRank(winner.id, winner.rank);
+    await this.playerService.updateRank(loser.id, loser.rank);
+
+    // Emit SSE updates
     this.notifyRankingUpdate(winner.id, winner.rank);
     this.notifyRankingUpdate(loser.id, loser.rank);
+
+    // console.log(`Updated ranks: winner=${winner.id} ${origWinnerRank} -> ${winner.rank}; loser=${loser.id} ${origLoserRank} -> ${loser.rank}`);
   }
 
   /**
    * Emit a ranking update via SSE
    */
   public notifyRankingUpdate(playerId: string, rank: number): void {
-    this.rankingUpdates$.next({
-      data: JSON.stringify({
-        type: 'RankingUpdate',
-        player: { id: playerId, rank },
-      }),
-    });
+    // emit a plain payload; mapping to SSE format is done by getRankingUpdates()
+    this.rankingUpdates$.next({ player: { id: playerId, rank } });
   }
 
   /**
-   * Get observable stream of ranking updates
+   * Get observable stream of ranking updates mapped to SSE format
    */
-  getRankingUpdates(): Subject<any> {
-    return this.rankingUpdates$;
+  getRankingUpdates(): Observable<any> {
+    return this.rankingUpdates$.asObservable().pipe(
+      map((evt) => ({
+        data: JSON.stringify({ type: 'RankingUpdate', player: evt.player }),
+      })),
+    );
   }
 }
